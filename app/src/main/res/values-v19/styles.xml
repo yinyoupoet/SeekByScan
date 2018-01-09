@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+    <style name="AppTheme.Base" parent="Theme.AppCompat.Light">
+        <item name="windowActionBar">false</item>   <!--隐藏原生actionbar-->
+        <item name="android:windowNoTitle">true</item>
+        <item name="windowNoTitle">true</item>
+
+        <!--将下方导航栏改成透明,只有v19+才可以，参考网址：http://blog.csdn.net/zhaoyw2008/article/details/40622919-->
+        <item name="android:windowTranslucentStatus">true</item>
+
+        <!--App Bar底色,如果使用actionbar则可以这样用，现在这个好像没用-->
+        <item name="colorPrimary">@color/accent_material_dark</item>
+        <!--状态栏的底色-->
+        <item name="colorPrimaryDark">@color/accent_material_dark</item>
+        <!--窗体背景色-->
+        <item name="android:windowBackground">@color/winbackcol</item>
+        <!--最下方操作栏底色，只有sdk在21以上才能用，所以在v21里设置-->
+        <!--<item name="android:navigationBarColor">@color/accent_material_light</item>-->
+
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+</resources>

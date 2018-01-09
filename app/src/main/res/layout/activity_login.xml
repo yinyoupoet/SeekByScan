@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.yinyoupoet.seekbyscan.LoginActivity"
+    >
+
+    <ImageView
+        android:id="@+id/login_bgimg"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_centerInParent="true"
+        android:scaleType="fitXY"
+        android:adjustViewBounds="true"
+        />
+
+    <ImageView
+        android:id="@+id/backToSeek"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="20dp"
+        android:src="@drawable/back"
+        />
+
+    <!--导入了一个包，是依赖项，参考网址：http://blog.csdn.net/qq_30321715/article/details/54912341-->
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/login_headpic"
+        android:layout_width="120dp"
+        android:layout_height="120dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="80dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/default_headpic"/>
+
+    <TextView
+        android:id="@+id/login_tv_Godfish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/login_headpic"
+        android:layout_marginTop="20dp"
+        android:text="扫码寻车"
+        android:textColor="#376B6D"
+        android:textSize="23sp"
+        android:typeface="monospace"/>
+
+    <!--这个relativelayout的背景是画出来的一个半透明的矩形，然后在其中的右半部分放一个完全透明的输入框-->
+    <RelativeLayout
+        android:id="@+id/login_rl_usernme"
+        android:layout_below="@+id/login_tv_Godfish"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/rectangle_edittext"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:alpha="150">
+
+        <!--这一张图片顺便将整个输入框撑开了-->
+        <ImageView
+            android:id="@+id/login_iv_userNamePic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="30dp"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:src="@mipmap/login_edittextuname"
+            />
+
+        <!--创建一个新的view，宽度只有1dip，用代码实现了一条线分隔开-->
+        <View
+            android:id="@+id/login_viewSplitName"
+            android:layout_width="1dip"
+            android:layout_height="20dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/login_iv_userNamePic"
+            android:background="#cccccc"
+            />
+
+        <!--ems设置的是edittext的宽度是19个字符，background设置为null就直接用的relativelayout的背景-->
+        <!--textCursorDrawable是对光标的设计，这里设置了宽度为1dip和颜色为灰色-->
+        <!--长度就是这里撑开的 -->
+        <EditText
+            android:id="@+id/login_et_userName"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/login_viewSplitName"
+            android:background="@null"
+            android:ems="19"
+            android:hint="用户名"
+            android:textColorHint="#cccccc"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="15sp"
+            android:textColor="#000000"
+            />
+
+        <ImageView
+            android:id="@+id/login_ivUserNameClear"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/login_ic_backspace"
+            android:visibility="invisible"/>
+
+
+
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/login_rl_userpwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_rl_usernme"
+        android:layout_marginTop="10dp"
+        android:background="@drawable/rectangle_edittext"
+        android:layout_marginRight="30dp"
+        android:layout_marginLeft="30dp"
+        android:alpha="150"
+        >
+
+        <ImageView
+            android:id="@+id/login_iv_userIvPwdPic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="30dp"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:src="@mipmap/login_edittextupwd"/>
+
+        <View
+            android:id="@+id/login_viewSplitPwd"
+            android:layout_width="1dip"
+            android:layout_height="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@+id/login_iv_userIvPwdPic"
+            android:background="#ccc"
+            />
+
+        <EditText
+            android:id="@+id/login_et_userPwd"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/login_viewSplitPwd"
+            android:background="@null"
+            android:drawablePadding="5dp"
+            android:ems="19"
+            android:hint="密码"
+            android:inputType="textPassword"
+            android:textColorHint="#cccccc"
+            android:textSize="15sp"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textColor="#000000"
+            />
+
+        <ImageView
+            android:id="@+id/login_ivUserPwdClear"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/login_ic_backspace"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
+    <TextView android:id="@+id/login_tv_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/login_rl_userpwd"
+        android:textColor="#465D4C"
+        android:textSize="18sp"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="30dp"
+        android:text="注册"/>
+
+    <Button
+        android:id="@+id/login_btn_login"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login_tv_register"
+        android:background="@drawable/round_corner_bg"
+        android:text="登录"
+        android:textColor="#26453D"
+        android:textSize="18sp"
+        />
+
+</RelativeLayout>

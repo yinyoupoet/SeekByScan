@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:id="@+id/activity_login"
+    android:background="#81C7d4"
+    >
+
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/register_toolbar"
+        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:background="?attr/colorPrimary"
+        android:paddingTop="15dp">
+    </android.support.v7.widget.Toolbar>
+
+    <RelativeLayout
+        android:id="@+id/rg_register_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/color_register_text"
+        android:layout_below="@id/register_toolbar"
+        android:alpha="150"
+        >
+
+        <ImageView
+            android:id="@+id/rg_usericonName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="30dp"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/ic_rg_user"/>
+
+        <View
+            android:id="@+id/rg_viewName"
+            android:layout_width="1dip"
+            android:layout_height="20dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/rg_usericonName"
+            android:background="#cccccc"/>
+
+        <EditText
+            android:id="@+id/rg_userName"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/rg_viewName"
+            android:background="@null"
+            android:ems="19"
+            android:hint="用户名"
+            android:textColorHint="#cccccc"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="15sp"
+            android:maxLength="15"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_backspace"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:id="@+id/rg_register_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/color_register_text"
+        android:layout_below="@id/rg_register_name"
+        android:layout_marginTop="1dip"
+        android:alpha="150"
+        >
+
+        <ImageView
+            android:id="@+id/rg_usericonPwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="30dp"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/ic_rg_password"/>
+
+        <View
+            android:id="@+id/rg_viewPwd"
+            android:layout_width="1dip"
+            android:layout_height="20dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/rg_usericonPwd"
+            android:background="#cccccc"/>
+
+        <EditText
+            android:id="@+id/rg_userPwd"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/rg_viewPwd"
+            android:background="@null"
+            android:ems="19"
+            android:hint="密码"
+            android:textColorHint="#cccccc"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:inputType="textPassword"
+            android:textSize="15sp"
+            android:maxLength="16"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_backspace"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/rg_Confirm_pwd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/color_register_text"
+        android:layout_below="@id/rg_register_pwd"
+        android:layout_marginTop="1dip"
+        android:alpha="150"
+        >
+
+        <ImageView
+            android:id="@+id/rg_usericonConfirm_Pwd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:paddingLeft="30dp"
+            android:paddingBottom="15dp"
+            android:paddingTop="15dp"
+            android:src="@drawable/ic_rg_confirmpwd"/>
+
+        <View
+            android:id="@+id/rg_viewConfirm_Pwd"
+            android:layout_width="1dip"
+            android:layout_height="20dip"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/rg_usericonConfirm_Pwd"
+            android:background="#cccccc"/>
+
+        <EditText
+            android:id="@+id/rg_userConfirm_Pwd"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:layout_toRightOf="@id/rg_viewConfirm_Pwd"
+            android:background="@null"
+            android:ems="19"
+            android:hint="确认密码"
+            android:inputType="textPassword"
+            android:textColorHint="#cccccc"
+            android:textCursorDrawable="@drawable/color_cursor"
+            android:textSize="15sp"
+            android:maxLength="16"/>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="20dp"
+            android:src="@drawable/ic_backspace"
+            android:visibility="invisible"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_rg"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/rg_Confirm_pwd"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/round_corner_rg_btn"
+        android:gravity="center"
+        android:text="注册"
+        android:textColor="#fff"
+        android:textSize="18sp"/>
+
+</RelativeLayout>
