@@ -120,6 +120,9 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 //点击地图
+                //Intent intent = new Intent(MainActivity.this,NavigatorActivity.class);
+                Intent intent = new Intent(MainActivity.this,NaviSecondActivity.class);
+                startActivity(intent);
             }
         });
 
