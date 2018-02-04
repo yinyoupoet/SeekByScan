@@ -30,4 +30,5 @@ dependencies {
     implementation 'com.squareup.okhttp3:okhttp:3.8.1'
     implementation 'com.github.yuzhiqiang1993:zxing:2.0.0'
     compile 'com.github.cazaea:sweet-alert-dialog:1.0.0'
+    compile 'com.github.MZCretin:ExternalMapUtils:v1.1.0'
 }

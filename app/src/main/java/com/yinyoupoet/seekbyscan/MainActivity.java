@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
 import android.os.Handler;
 import android.os.Looper;
 import android.support.annotation.NonNull;
@@ -23,6 +24,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.cazaea.sweetalert.SweetAlertDialog;
+import com.cretin.www.externalmaputilslibrary.OpenExternalMapAppUtils;
+import com.cretin.www.externalmaputilslibrary.web.TbWebViewActivity;
 import com.yzq.zxinglibrary.android.CaptureActivity;
 import com.yzq.zxinglibrary.bean.ZxingConfig;
 import com.yzq.zxinglibrary.common.Constant;
@@ -122,6 +125,16 @@ public class MainActivity extends AppCompatActivity{
                 //点击地图
                 Intent intent = new Intent(MainActivity.this,NavigatorActivity.class);
                 startActivity(intent);
+
+
+                /*Intent i1 = new Intent();
+                i1.setData(Uri.parse("baidumap://map/direction?origin=name:对外经贸大学&destination=name:西直门&mode=transit&sy=3&index=0&target=1"));
+                startActivity(i1);*/
+
+                /*OpenExternalMapAppUtils.openBrosserNaviMap(this, split[0], split[1], sName,
+                        split1[0], split1[1], dName, "深圳", "测试DEMO");*/
+                //TbWebViewActivity.startActivity(activity, title, "http://api.map.baidu.com/marker?location=" + latitude + "," + longitude + "&title=" + title + "&content=" + content + "&output=html&src=" + appName);
+               // http://api.map.baidu.com/direction?origin=长沙理工大学|name:长沙理工大学&destination=湖南大学&mode=transit&output=html&src=易寻
             }
         });
 
