@@ -11,7 +11,8 @@ public class OkHttpUtils {
     public static boolean isLogin = false;     //这个用来检测是否需要自启动的
     public static int ID;              //这个是用来保存用户登录的ID的，所有activity都用得到
     static OkHttpClient mOKHttpClient;
-    static final String BASE_URL = "http://47.94.212.1/SeekByScan_war/";
+    static final String BASE_URL = "http://47.94.212.1:8080/SeekByScan_war/";
+    //static final String BASE_URL = "http://192.168.0.106:8080/";
 
     static Response mResponse;                  //用来返回的response
     public static boolean refreshMajor = true;

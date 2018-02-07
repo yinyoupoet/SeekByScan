@@ -39,7 +39,7 @@ public class LoginActivity extends AppCompatActivity {
 
     String lName;
     String lPwd;
-    String lMac;
+    String lMac;                    //这已经不是Mac了，而是设备的唯一编码，IMEI on GSM, MEID for CDMA
     String lPosition;
     String lTime;
 
@@ -270,7 +270,7 @@ public class LoginActivity extends AppCompatActivity {
         cursor.close();
         //lName = userName.getText().toString().trim();
         //lPwd = userPwd.getText().toString().trim();
-        lMac = MacUtils.getMacAddr();
+        lMac = MacUtils.getImei();
     }
     //endregion
 

@@ -13,7 +13,9 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -50,6 +52,8 @@ import okhttp3.Response;
 
 public class MainActivity extends AppCompatActivity{
     private static final int MY_PERMISSIONS_REQUEST_CAMERA = 1;
+    private static final int MY_PERMISSIONS_REQUEST_READ_PHONE_STATE = 2;
+
     static int REQUEST_CODE_SCAN = 99;
     Button scan;
     TextView position;
@@ -65,14 +69,18 @@ public class MainActivity extends AppCompatActivity{
     String userPwd = "";                      //数据库查询到或者将保存的密码
     String curPosition = "";
     String curTime = "";
-    String macAddress = "";
+    String macAddress = "";                 //这已经不是Mac了，而是设备的唯一编码，IMEI on GSM, MEID for CDMA
 
     //以下三个是联网获取到的信息
     String gPosition = "";
     String gTime = "";
     String gTip = "";
 
+    private long exitTime = 0;  //点两下退出才退出,记录点击间隔时间
+
     private Handler mHandle;   //在子线程中异步更新主UI
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,11 +98,16 @@ public class MainActivity extends AppCompatActivity{
         scan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getAccess();
+                if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
+                    ActivityCompat.requestPermissions(MainActivity.this,new String[]{Manifest.permission.CAMERA},MY_PERMISSIONS_REQUEST_CAMERA);
+                }else{
+                    doScan();
+                }
             }
         });
         //endregion
 
+        Log.d("IMEI", macAddress);
     }
 
     //region 初始化
@@ -102,7 +115,7 @@ public class MainActivity extends AppCompatActivity{
         scan = findViewById(R.id.start);
         position = findViewById(R.id.position);
         time = findViewById(R.id.time);
-        macAddress = MacUtils.getMacAddr();
+        macAddress = getDeviceId();
         user = findViewById(R.id.userServer);
         map = findViewById(R.id.btn_map);
 
@@ -123,8 +136,17 @@ public class MainActivity extends AppCompatActivity{
             @Override
             public void onClick(View view) {
                 //点击地图
-                Intent intent = new Intent(MainActivity.this,NavigatorActivity.class);
-                startActivity(intent);
+                String pos = position.getText().toString().trim();
+
+                if(!pos.equals("")){
+                    //Toast.makeText(MainActivity.this,pos,Toast.LENGTH_SHORT).show();
+                    Intent intent = new Intent(MainActivity.this,NavigatorActivity.class);
+                    intent.putExtra("position",pos);
+                    startActivity(intent);
+                }else{
+                    Toast.makeText(MainActivity.this,"您还没有停车哦",Toast.LENGTH_SHORT).show();
+                }
+
 
 
                 /*Intent i1 = new Intent();
@@ -189,7 +211,7 @@ public class MainActivity extends AppCompatActivity{
             cursor.close();
         }
 
-        Toast.makeText(this,userName+":"+userPwd,Toast.LENGTH_LONG).show();
+        //Toast.makeText(this,userName+":"+userPwd,Toast.LENGTH_LONG).show();
         doLogin(userName,userPwd);
         return false;
     }
@@ -278,10 +300,16 @@ public class MainActivity extends AppCompatActivity{
 
     //region 获取权限
     private void getAccess(){
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.CAMERA},MY_PERMISSIONS_REQUEST_CAMERA);
-        }else{
-            doScan();
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
+            //如果以前申请过但是用户拒绝了，且点击了不再提示申请该权限，则进行提醒
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this,Manifest.permission.READ_PHONE_STATE)){
+                //不要显示给用户解释了
+                //Toast.makeText(this, "由于您选择关闭", Toast.LENGTH_SHORT).show();
+                return;
+            }else{
+                //进行权限申请
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_PHONE_STATE},MY_PERMISSIONS_REQUEST_READ_PHONE_STATE);
+            }
         }
     }
     //endregion
@@ -289,6 +317,7 @@ public class MainActivity extends AppCompatActivity{
     //region 获取权限的回调
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        //摄像机权限
         if(requestCode == MY_PERMISSIONS_REQUEST_CAMERA){
             if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
                 doScan();
@@ -296,6 +325,15 @@ public class MainActivity extends AppCompatActivity{
                 Toast.makeText(this,"请允许权限后重试",Toast.LENGTH_SHORT).show();
             }
             return;
+        }
+        else if(requestCode == MY_PERMISSIONS_REQUEST_READ_PHONE_STATE){
+            if(grantResults[0] == PackageManager.PERMISSION_GRANTED){
+                macAddress = getDeviceId();
+                MacUtils.imei = macAddress;
+            }else{
+                macAddress = "";
+            }
+            Log.d("IMEI", macAddress);
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
     }
@@ -527,5 +565,44 @@ public class MainActivity extends AppCompatActivity{
     //endregion
 
 
+    //region 获取设备唯一标识码
+    //This will return whatever string uniquely identifies the device (IMEI on GSM, MEID for CDMA).
+    private String getDeviceId(){
+        TelephonyManager tm = (TelephonyManager) this.getSystemService(TELEPHONY_SERVICE);
+        //判断是否有权限获取手持式移动终端硬件设备唯一编码
+        //如果有该权限
+        if(ContextCompat.checkSelfPermission(this,Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED){
+            Log.d("IMEI", tm.getDeviceId());
+            MacUtils.imei = tm.getDeviceId();
+            return tm.getDeviceId();
+        }else{
+            getAccess();
+        }
+        return "";
+    }
+    //endregion
+
+    //region 点两下退出才退出，这里进行相关设置
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK){
+            exit();
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    private void exit(){
+        if((System.currentTimeMillis() - exitTime) > 2000){
+            Toast.makeText(MainActivity.this,"再按一次退出程序",Toast.LENGTH_SHORT).show();
+            exitTime = System.currentTimeMillis();
+        }else{
+            finish();
+            System.exit(0);
+        }
+    }
+
+    //endregion
 
 }

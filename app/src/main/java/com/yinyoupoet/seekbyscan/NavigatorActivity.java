@@ -6,6 +6,7 @@ import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.webkit.WebChromeClient;
 import android.webkit.WebResourceRequest;
 import android.webkit.WebResourceResponse;
@@ -19,11 +20,17 @@ public class NavigatorActivity extends AppCompatActivity {
 
     private WebView webView;
     private long exitTime = 0;
+    //起点和终点
+    String destination = "";
+    String start = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_navigator);
+
+        Intent intent = getIntent();
+        destination = intent.getStringExtra("position");
 
         webView = new WebView(this);
 
@@ -51,7 +58,7 @@ public class NavigatorActivity extends AppCompatActivity {
             @Override
             public void onPageFinished(WebView view, String url) {
                 //String s = "var qq = $('#fis_elm__4 div div div ul li:nth-child(3) a'); qq.click();$('#se-txt-start').val('长沙理工大学');$('#se-txt-end').val('湖南大学'); window.alert('js injection success');";
-                String s = "$('#se-txt-start').val('长沙理工大学');$('#se-txt-end').val('湖南大学');";
+                String s = "$('#se-txt-start').val('我的位置');$('#se-txt-end').val('"+destination+"');";
 
                 webView.loadUrl("javascript:" + s);
                 super.onPageFinished(view, url);
@@ -79,5 +86,18 @@ public class NavigatorActivity extends AppCompatActivity {
         webView.loadUrl("https://map.baidu.com/mobile/webapp/index/index/qt=cur&wd=%E5%8C%97%E4%BA%AC%E5%B8%82&from=maponline&tn=m01&ie=utf-8=utf-8/tab=line/?fromhash=1");
         setContentView(webView);
     }
+
+    //region 重写物理返回键
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if(keyCode == KeyEvent.KEYCODE_BACK && webView.canGoBack()){
+            webView.goBack();
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    //endregion
 
 }
